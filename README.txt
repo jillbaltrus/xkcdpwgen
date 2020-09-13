@@ -25,3 +25,5 @@ symbol all shuffled together. An example might be, "3Pickles9!security67"
 "./xkcdpwgen --words 0 -c 10 -n 3 --symbols 2"
 - creates a password with 3 numbers and 2 symbols all shuffled together. An example might
 be "*4#21"
+
+Thank you to dwyl on Github for creating the words_alpha.txt file used here :)
