@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+import sys
+import random
+
+if '-h' in sys.argv or '--help' in sys.argv:
+    print("""xkcdpwgen [-h] [-w WORDS] [-c CAPS] [-n NUMBERS] [-s SYMBOLS]
+Generates a secure, memorable password using the XKCD method. 
+Optional arguments:
+-h, --help : show this message and quit
+-w WORDS, --words WORDS : include WORDS words in the password, default = 4
+-c CAPS, --caps CAPS : capitalize the first letter of CAPS random words, default = 0
+-n NUMBERS --numbers NUMBERS : inserts NUMBERS random numbers in the password , default = 0
+-s SYMBOLS, --symbols SYMBOLS : insert SYMBOLS random symbols in the password, default = 0""")
+    sys.exit()
+
+if '-w' in sys.argv:
+    words = int(sys.argv[sys.argv.index('-w') + 1])
+elif '--words' in sys.argv:
+    words = int(sys.argv[sys.argv.index('--words') + 1])
+else:
+    words = 4
+
+if '-c' in sys.argv:
+    caps = int(sys.argv[sys.argv.index('-c') + 1])
+elif '--caps' in sys.argv:
+    caps = int(sys.argv[sys.argv.index('--caps') + 1])
+else:
+    caps = 0
+
+if '-n' in sys.argv:
+    nums = int(sys.argv[sys.argv.index('-n') + 1])
+elif '--numbers' in sys.argv:
+    nums = int(sys.argv[sys.argv.index('--numbers') + 1])
+else:
+    nums = 0
+
+if '-s' in sys.argv:
+    syms = int(sys.argv[sys.argv.index('-s') + 1])
+elif '--symbols' in sys.argv:
+    syms = int(sys.argv[sys.argv.index('--symbols') + 1])
+else :
+    syms = 0
+    
+all_words = []
+with open('words_alpha.txt') as dictionary :
+    for w in dictionary:
+        w = w.split(' ')
+        all_words.extend(w)      
+
+symbolList = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '.', ':', ':']
+
+elements = random.choices(all_words, k=words)
+for e in elements:
+    elements[elements.index(e)] = e.strip()
+    
+indicesToCapitalize = random.sample(range(0, words), k=min(caps, words))
+
+for x in indicesToCapitalize:
+    elements[x] = elements[x].capitalize()
+    
+numbers = random.choices(range(0, 10), k=nums)
+for n in numbers:
+    numbers[numbers.index(n)] = str(n)
+   
+symbols = random.choices(symbolList, k=syms)
+for s in symbols:
+    elements.append(s)
+for n in numbers:
+    elements.append(n)
+random.shuffle(elements)
+print(''.join(elements))
+sys.exit()
+
+
+
+    
+
+
+
